@@ -129,15 +129,15 @@
 
     /* Cards */
     .card-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
-    .feature-card { position: relative; min-height: 300px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(145deg, rgba(21,30,42,.9), rgba(14,19,27,.85)); overflow: hidden; transition: border-color .25s ease, transform .25s ease; }
+    .feature-card { position: relative; display: flex; flex-direction: column; min-height: 300px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(145deg, rgba(21,30,42,.9), rgba(14,19,27,.85)); overflow: hidden; transition: border-color .25s ease, transform .25s ease; }
     .feature-card:hover { transform: translateY(-4px); border-color: rgba(143,184,255,.42); }
     .card-top { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     .card-index { color: var(--subtle); font: .72rem "Space Grotesk", sans-serif; letter-spacing: .12em; }
     .card-symbol { display: grid; place-items: center; width: 43px; height: 43px; border: 1px solid var(--line-strong); border-radius: 13px; color: var(--accent); font: 600 1rem "Space Grotesk", sans-serif; }
     .feature-card h3 { font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.1; font-weight: 500; margin: 38px 0 12px; }
     .feature-card p { max-width: 510px; color: var(--muted); font-size: .9rem; margin: 0; }
-    .card-bottom { position: absolute; left: 30px; right: 30px; bottom: 26px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-    .tag { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; color: #b7c2d0; font-size: .67rem; }
+    .card-bottom { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 10px 12px; margin-top: auto; padding-top: 24px; }
+    .tag { display: inline-flex; align-items: center; max-width: 100%; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; color: #b7c2d0; font-size: .67rem; line-height: 1.35; }
     .text-link { color: var(--accent); font-size: .78rem; font-weight: 700; }
     .text-link:hover { color: #c2d8ff; }
     .card-glow { position: absolute; width: 230px; height: 230px; border-radius: 50%; background: rgba(88,139,214,.08); filter: blur(45px); right: -75px; top: -100px; pointer-events: none; }
@@ -281,7 +281,7 @@
       .map-overlay-label { top: 11px; left: 11px; }
     }
   </style>
-  <link href="portfolio.css?v=research-paper-reader-5" rel="stylesheet" />
+  <link href="portfolio.css?v=research-paper-reader-6" rel="stylesheet" />
 </head>
 <body>
   <header class="site-header">
@@ -315,7 +315,21 @@
             <a class="button button-primary" href="#projects">Explore my work <span aria-hidden="true">↘</span></a>
             <a class="button button-secondary" href="#journey">My journey <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="hero-meta"><span>Aerospace &amp; DeepTech Enthusiast</span><a href="https://github.com/AniruddhAlexanderKumar" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+          <div class="hero-meta">
+            <span>Aerospace &amp; DeepTech Enthusiast</span>
+            <a href="https://github.com/AniruddhAlexanderKumar" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <div class="hero-social-links" aria-label="Social profiles">
+              <a class="social-icon-link" href="https://www.linkedin.com/in/aniruddh-alexander-kumar-7b86253a3" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.34H4.97V9.02h2.96v9.32ZM6.45 7.75a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44Zm11.89 10.59h-2.95v-4.53c0-1.08-.02-2.47-1.5-2.47-1.51 0-1.74 1.18-1.74 2.39v4.61H9.2V9.02h2.83v1.27h.04c.39-.73 1.36-1.5 2.8-1.5 3 0 3.56 1.97 3.56 4.53v5.02Z"/></svg>
+              </a>
+              <a class="social-icon-link" href="https://bsky.app/profile/aniruddh-alxdrkumr.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky profile" title="Bluesky">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 3.3c2.8 2.1 5.9 6.4 6.8 8.7.9-2.3 4-6.6 6.8-8.7 2-1.5 5.2-2.7 5.2 1 0 .7-.4 5.8-.7 6.7-.9 3-4.1 3.8-7 3.3 5 .8 6.3 3.8 3.5 6.8-5.3 5.7-7.5-1.5-8-3.4-.1-.4-.2-.6-.3-.6s-.2.2-.3.6c-.5 1.9-2.7 9.1-8 3.4-2.8-3-1.5-6 3.5-6.8-2.9.5-6.1-.3-7-3.3-.3-.9-.7-6-.7-6.7 0-3.7 3.2-2.5 5.2-1Z"/></svg>
+              </a>
+              <a class="social-icon-link" href="https://www.reddit.com/user/AniruddhAlexdrKumar/" target="_blank" rel="noopener noreferrer" aria-label="Reddit profile" title="Reddit">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.8 3.1a1.7 1.7 0 1 0-1.6 2.1l1 .1.9 4.3c-1-.2-2-.3-3.1-.3-2.5 0-4.7.6-6.2 1.6a1.8 1.8 0 1 0-1.2 3.2c-.1.4-.2.8-.2 1.2 0 3.1 3.4 5.6 7.6 5.6s7.6-2.5 7.6-5.6c0-.4-.1-.8-.2-1.2a1.8 1.8 0 1 0-1.2-3.2c-1-.7-2.3-1.2-3.8-1.5l-.8-3.8 2.6.3a1.7 1.7 0 1 0 .2-1.2l-3.1-.4-.5-.1a1.7 1.7 0 0 0-1.2-1.1Zm-5.2 9.7a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Zm5 0a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Zm-5 4.1c1.2.9 3.6.9 4.8 0 .2-.2.5-.1.6.1.1.2.1.4-.1.6-1.6 1.2-4.3 1.2-5.9 0-.2-.2-.2-.4-.1-.6.2-.2.5-.3.7-.1Z"/></svg>
+              </a>
+            </div>
+          </div>
         </div>
         <div class="hero-visual reveal" aria-label="Portrait placeholder">
           <div class="orbit"><span class="orbit-node"></span></div>
@@ -354,8 +368,7 @@
             <div class="card-top"><img class="venture-logo" src="assets/solution-velocity-logo.png" alt="Solution Velocity logo" /></div>
             <h3>Solution Velocity</h3>
             <p>An AI-powered product development lifecycle platform designed to connect engineering teams, tools and workflows in one coordinated environment.</p>
-            <div class="card-bottom"><span class="tag">Product development · AI</span><a class="venture-action" href="https://pdlc.dalvigroup.co.in/" target="_blank" rel="noopener noreferrer">Explore the platform <span aria-hidden="true">↗</span></a></div>
-            <a class="text-link venture-github-link" href="https://github.com/AniruddhAlexanderKumar" target="_blank" rel="noopener noreferrer">Explore GitHub ↗</a>
+            <div class="card-bottom"><span class="tag">Product development · AI</span><a class="venture-action" href="https://pdlc.dalvigroup.co.in/" target="_blank" rel="noopener noreferrer">Explore the platform <span aria-hidden="true">↗</span></a><a class="text-link venture-github-link" href="https://github.com/AniruddhAlexanderKumar" target="_blank" rel="noopener noreferrer">Explore GitHub ↗</a></div>
           </article>
           <article class="feature-card reveal">
             <div class="card-glow"></div>
@@ -366,6 +379,13 @@
             <div class="venture-details" id="consecuenciaDetails" hidden>
               <p>Consecuencia explores how teams can trace downstream dependencies when requirements or designs change, helping make affected evidence and decisions easier to identify. Status: concept development.</p>
             </div>
+          </article>
+          <article class="feature-card reveal">
+            <div class="card-glow"></div>
+            <div class="card-top"><img class="venture-logo venture-logo--san-jose" src="assets/san-jose-ai-logo.png" alt="San Jose AI logo" /></div>
+            <h3>San Jose AI</h3>
+            <p>501(c)(3) Nonprofit Organization</p>
+            <div class="card-bottom"><span class="tag">Director of Technology</span><a class="venture-action" href="https://sanjones-ai.github.io/official/" target="_blank" rel="noopener noreferrer">Explore initiative <span aria-hidden="true">↗</span></a></div>
           </article>
         </div>
       </div>
@@ -445,12 +465,15 @@
           <p>Academic competitions, programmes and milestones. Specific years are omitted where they were not provided.</p>
         </div>
         <div class="timeline">
-          <article class="timeline-item reveal"><span class="timeline-year">RESEARCH & WRITING</span><h3>John Locke Institute — High Commendation</h3><p>Received a High Commendation in the Science & Technology category after being shortlisted.</p></article>
-          <article class="timeline-item reveal"><span class="timeline-year">ENTREPRENEURSHIP</span><h3>Dexterity Class 2027</h3><p>DexSchool of Entrepreneurship and Leadership. Selected for a national cohort focused on developing young entrepreneurs and problem-solvers.</p></article>
+          <article class="timeline-item timeline-item--highlight reveal"><span class="timeline-year">RESEARCH & WRITING</span><h3>John Locke Essay Competition - Science &amp; Technology</h3><p class="recognition-award">High Commendation</p><p class="recognition-note">Awarded High Commendation in the Senior Section despite being an Eligible Junior.</p></article>
+          <article class="timeline-item reveal"><span class="timeline-year">ENTREPRENEURSHIP</span><h3>Dexterity Class 2027</h3><p>DexSchool of Entrepreneurship and Leadership. Selected for a national cohort focused on developing young entrepreneurs and problem-solvers.</p><a class="text-link" href="https://www.dexschool.org/" target="_blank" rel="noopener noreferrer">Have a look at the program ↗</a></article>
+          <article class="timeline-item reveal"><span class="timeline-year">LEADERSHIP &amp; ENTREPRENEURSHIP</span><h3>Early Steps Academy — Global Legend Program Completion</h3><p>Completed a four-year program covering 52 case studies.</p></article>
+          <article class="timeline-item reveal"><span class="timeline-year">ARTIFICIAL INTELLIGENCE</span><h3>Times of India — AI Skillset Certification</h3></article>
+          <article class="timeline-item reveal"><span class="timeline-year">NATIONAL SCHOLAR DEVELOPMENT</span><h3>Dexterity National Scholar Development Program</h3><a class="text-link" href="https://www.dexteritytocollege.org/" target="_blank" rel="noopener noreferrer">Have a look at the program ↗</a></article>
           <article class="timeline-item reveal"><span class="timeline-year">ACADEMIC DEVELOPMENT</span><h3>Oxford Signature Course</h3><p>Accepted into the programme with a merit award.</p></article>
           <article class="timeline-item reveal"><span class="timeline-year">ENGINEERING & AVIATION</span><h3>Embry-Riddle Aviation 101</h3><p>Completed an introductory aviation learning experience as part of a wider interest in flight and aerospace.</p></article>
-          <article class="timeline-item timeline-item--highlight reveal"><span class="timeline-year">MATHEMATICS</span><h3>World Maths Day (3P Learning)</h3><p>International Rank 2</p></article>
-          <article class="timeline-item reveal"><span class="timeline-year">SCIENCE & ENGINEERING</span><h3>International Schools of Shanghai Province Science Fair</h3><p>Achieved a Gold Medal.</p></article>
+          <article class="timeline-item timeline-item--highlight reveal"><span class="timeline-year">MATHEMATICS</span><h3>World Maths Day (3P Learning)</h3><p class="recognition-award">International Rank 2</p></article>
+          <article class="timeline-item timeline-item--highlight reveal"><span class="timeline-year">SCIENCE & ENGINEERING</span><h3>International Schools of Shanghai Province Science Fair</h3><p class="recognition-award">Gold Medal</p></article>
         </div>
       </div>
     </section>
@@ -466,12 +489,14 @@
             <span class="sport-icon">01 / FOOTBALL</span>
             <h3>Football</h3>
             <p>I play primarily as an attacking midfielder, with experience in forward and wide roles. I have been part of the Real Madrid Foundation West India Select Squad U15 Team, South United U17 Select Squad, and Shanghai Lions FC U9 and U12 Select Squads.</p>
-            <p>Linkebreaker</p>
             <p>Indus International School Pune Varsity</p>
             <p>Elpro International School PCMC Varsity</p>
             <div class="sport-facts"><span>Primary: CAM · RM · RWB</span><span>Also: ST · RW</span><span>Preferred foot: Right</span></div>
             <a class="text-link" href="football.html">Explore Highlights ↗</a>
-            <div class="media-placeholder" role="note">Football photograph or video highlights can be added here.</div>
+            <div class="football-photo-gallery" aria-label="Football match photographs">
+              <img src="assets/football/football-match-01.png" alt="Aniruddh wearing number 18 during a football match" loading="lazy" />
+              <img src="assets/football/football-match-02.png" alt="Aniruddh celebrating during a football match" loading="lazy" />
+            </div>
           </article>
           <article class="sport-panel reveal">
             <span class="sport-icon">02 / TAEKWONDO</span>
@@ -479,7 +504,33 @@
             <p>I am a Taekwondo practitioner with 10 years of training. I earned my Poom 1 (Dan 1) black belt at age 10, awarded by the Korean Taekwondo Association of China—an achievement attained by very few Indians. I represented Karnataka Taekwondo Academy at the Karnataka State Taekwondo Championship, reaching the quarter-finals in 2024–25. I earned bronze at the ZP District Taekwondo Cup in 2025–26 and bronze at the ISSO Taekwondo National Championship in 2026–27.</p>
             <div class="sport-facts"><span>Poom 1 (Dan 1) black belt, awarded at age 10</span><span>Korean Taekwondo Association of China</span><span>10 years of practice</span><span>Karnataka State Championship quarter-finalist (2024–25)</span><span>ZP District Taekwondo Cup bronze (2025–26)</span><span>ISSO Taekwondo Nationals bronze (2026–27)</span></div>
             <a class="text-link" href="taekwondo.html">Explore Highlights ↗</a>
-            <div class="media-placeholder" role="note">Taekwondo photograph or competition footage can be added here.</div>
+            <div class="taekwondo-photo-slider" data-photo-slider aria-label="Taekwondo photographs">
+              <div class="taekwondo-photo-slides">
+                <figure class="taekwondo-photo-slide">
+                  <img src="assets/taekwondo-gallery/taekwondo-01.png" alt="Aniruddh at a taekwondo competition" loading="lazy" />
+                </figure>
+                <figure class="taekwondo-photo-slide" hidden>
+                  <img src="assets/taekwondo-gallery/taekwondo-02.png" alt="Aniruddh in a taekwondo uniform" loading="lazy" />
+                </figure>
+                <figure class="taekwondo-photo-slide" hidden>
+                  <img src="assets/taekwondo-gallery/taekwondo-03.png" alt="Aniruddh with a fellow martial artist in Kuwait" loading="lazy" />
+                  <figcaption>Kuwait - 2023</figcaption>
+                </figure>
+                <figure class="taekwondo-photo-slide" hidden>
+                  <img src="assets/taekwondo-gallery/taekwondo-04.png" alt="Aniruddh with his taekwondo instructor and another student" loading="lazy" />
+                  <figcaption>Kuwait - 2023</figcaption>
+                </figure>
+                <figure class="taekwondo-photo-slide" hidden>
+                  <img src="assets/taekwondo-gallery/taekwondo-05.png" alt="Aniruddh with family after taekwondo training" loading="lazy" />
+                  <figcaption>Kuwait - 2023</figcaption>
+                </figure>
+              </div>
+              <div class="taekwondo-photo-controls">
+                <button class="photo-slide-control" type="button" data-photo-previous aria-label="Previous taekwondo photo" disabled>‹</button>
+                <span data-photo-count aria-live="polite">1 / 5</span>
+                <button class="photo-slide-control" type="button" data-photo-next aria-label="Next taekwondo photo">›</button>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -503,8 +554,8 @@
           <p>From adapting to new environments to taking on challenges outdoors, every experience has shaped how I learn and work with others.</p>
         </div>
         <div class="experience-grid">
-          <article class="experience-card reveal"><span class="card-index">HIMALAYAN EXPEDITION</span><h3>Kedarkantha trek</h3><p>The Kedarkantha trek was a chance to take on a high-altitude Himalayan route, experience a new landscape and put preparation and endurance to the test.</p><div class="media-placeholder" role="note">Kedarkantha expedition photograph can be added here.</div></article>
-          <article class="experience-card reveal"><span class="card-index">DIPLOMACY &amp; DEBATE</span><h3>Model United Nations</h3><p>Served as the Chair for the UNGA twice.</p><p>Served as the Delegate of South Africa, United States of America, United Kingdom &amp; Counsel Member in the Indian Sports Conference.</p><div class="sport-facts"><span>Total experiences: 6</span><span>Chair experiences: 2</span><span>Awards: 3</span></div></article>
+          <article class="experience-card reveal"><span class="card-index">HIMALAYAN EXPEDITION</span><h3>Kedarkantha trek</h3><p>The Kedarkantha trek was a chance to take on a high-altitude Himalayan route, experience a new landscape and put preparation and endurance to the test.</p><div class="kedarkantha-gallery" aria-label="Kedarkantha trek photograph"><img src="assets/kedarkantha-trek-02.png" alt="Aniruddh on the Kedarkantha trek" loading="lazy" /></div></article>
+          <article class="experience-card reveal"><span class="card-index">DIPLOMACY &amp; DEBATE</span><h3>Model United Nations</h3><p>Served as the Chair for the UNGA twice.</p><p>Served as the Delegate of South Africa, United States of America, United Kingdom &amp; Counsel Member in the Indian Sports Conference.</p><div class="sport-facts"><span>Total experiences: 6</span><span>Chair experiences: 2</span><span>Awards: 3</span></div><img class="mun-photo" src="assets/mun-unga-session.png" alt="Aniruddh speaking at a Model United Nations event" loading="lazy" /></article>
           <article class="experience-card reveal"><span class="card-index">LEADERSHIP & TEAMWORK</span><h3>Indus School of Leadership</h3><p>Leadership experiences at school and working with teammates have helped me take responsibility, adapt to changing situations and contribute to a shared goal.</p></article>
           <article class="experience-card reveal"><span class="card-index">LEADERSHIP &amp; ENTREPRENEURSHIP</span><h3>Dexterity School of Leadership &amp; Entrepreneurship</h3><p>DexSchool is a leadership development program for teenagers, focused on building leaders for India and the world. I am a candidate for the DexSchool Class of 2027.</p><a class="text-link" href="https://www.dexschool.org/" target="_blank" rel="noopener noreferrer">Explore DexSchool ↗</a></article>
           <article class="experience-card reveal"><span class="card-index">NATIONAL SCHOLAR DEVELOPMENT</span><h3>Dexterity Group's National Scholar Development Program</h3><p>A national scholar development program for young leaders in Indian high schools, colleges and workplaces.</p><a class="text-link" href="https://www.dexteritytocollege.org/" target="_blank" rel="noopener noreferrer">Explore the program ↗</a></article>
@@ -572,7 +623,19 @@
   <footer class="footer">
     <div class="container footer-row">
       <span>© <span id="currentYear">2026</span> Aniruddh Alexander Kumar</span>
-      <div class="footer-links"><a href="#home">Back to top ↑</a><a href="https://github.com/AniruddhAlexanderKumar" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      <div class="footer-links">
+        <a href="#home">Back to top ↑</a>
+        <a href="https://github.com/AniruddhAlexanderKumar" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a class="social-icon-link" href="https://www.linkedin.com/in/aniruddh-alexander-kumar-7b86253a3" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.34H4.97V9.02h2.96v9.32ZM6.45 7.75a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44Zm11.89 10.59h-2.95v-4.53c0-1.08-.02-2.47-1.5-2.47-1.51 0-1.74 1.18-1.74 2.39v4.61H9.2V9.02h2.83v1.27h.04c.39-.73 1.36-1.5 2.8-1.5 3 0 3.56 1.97 3.56 4.53v5.02Z"/></svg>
+        </a>
+        <a class="social-icon-link" href="https://bsky.app/profile/aniruddh-alxdrkumr.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky profile" title="Bluesky">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 3.3c2.8 2.1 5.9 6.4 6.8 8.7.9-2.3 4-6.6 6.8-8.7 2-1.5 5.2-2.7 5.2 1 0 .7-.4 5.8-.7 6.7-.9 3-4.1 3.8-7 3.3 5 .8 6.3 3.8 3.5 6.8-5.3 5.7-7.5-1.5-8-3.4-.1-.4-.2-.6-.3-.6s-.2.2-.3.6c-.5 1.9-2.7 9.1-8 3.4-2.8-3-1.5-6 3.5-6.8-2.9.5-6.1-.3-7-3.3-.3-.9-.7-6-.7-6.7 0-3.7 3.2-2.5 5.2-1Z"/></svg>
+        </a>
+        <a class="social-icon-link" href="https://www.reddit.com/user/AniruddhAlexdrKumar/" target="_blank" rel="noopener noreferrer" aria-label="Reddit profile" title="Reddit">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.8 3.1a1.7 1.7 0 1 0-1.6 2.1l1 0.1.9 4.3c-1-.2-2-.3-3.1-.3-2.5 0-4.7.6-6.2 1.6a1.8 1.8 0 1 0-1.2 3.2c-.1.4-.2.8-.2 1.2 0 3.1 3.4 5.6 7.6 5.6s7.6-2.5 7.6-5.6c0-.4-.1-.8-.2-1.2a1.8 1.8 0 1 0-1.2-3.2c-1-.7-2.3-1.2-3.8-1.5l-.8-3.8 2.6.3a1.7 1.7 0 1 0 .2-1.2l-3.1-.4-.5-.1a1.7 1.7 0 0 0-1.2-1.1Zm-5.2 9.7a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Zm5 0a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Zm-5 4.1c1.2.9 3.6.9 4.8 0 .2-.2.5-.1.6.1.1.2.1.4-.1.6-1.6 1.2-4.3 1.2-5.9 0-.2-.2-.2-.4-.1-.6.2-.2.5-.3.7-.1Z"/></svg>
+        </a>
+      </div>
     </div>
   </footer>
   <script src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>

@@ -33,6 +33,9 @@ body::before { display: none; }
 .hero-intro { color: var(--muted); }
 .hero-meta { color: var(--subtle); }
 .hero-meta a { color: var(--accent); }
+.hero-social-links { display: inline-flex; align-items: center; gap: 12px; }
+.hero-social-links .social-icon-link { width: 20px; height: 20px; }
+.hero-social-links .social-icon-link svg { width: 17px; height: 17px; }
 .orbit, .orbit::before, .orbit::after { border-color: rgba(69,107,154,.16); }
 .portrait-frame { aspect-ratio: 225 / 289; border-radius: 14px; border-color: var(--line-strong); background: linear-gradient(150deg,#edf2f7,#e2e8ef 52%,#d7e0e9); box-shadow: var(--shadow); }
 .portrait-frame::before { border-radius: 8px; border-color: rgba(50,72,97,.16); }
@@ -60,6 +63,7 @@ body::before { display: none; }
 .card-index { color: var(--subtle); }
 .card-symbol { border-color: var(--line-strong); color: var(--accent); }
 .venture-logo { display: block; width: 82px; height: 48px; object-fit: contain; object-position: center; padding: 3px 5px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+.venture-logo--san-jose { width: 64px; height: 64px; padding: 0; border-radius: 10px; background: #000; }
 .venture-action { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: #fff; color: var(--accent-strong); font: 700 .74rem "DM Sans",sans-serif; white-space: nowrap; cursor: pointer; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
 .venture-action:hover { transform: translateY(-1px); border-color: var(--accent); background: #f2f6fa; }
 .venture-action:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -77,11 +81,17 @@ body::before { display: none; }
 .timeline::before { background: var(--line-strong); }
 .timeline-item::after { background: var(--accent); box-shadow: 0 0 0 6px rgba(69,107,154,.1); }
 .timeline-item--highlight h3 { color: var(--accent-strong); font-size: clamp(1.7rem,3vw,2.25rem); }
-.timeline-item--highlight p { display: inline-flex; margin: 0; padding: 8px 14px; border: 1px solid rgba(69,107,154,.24); border-radius: 999px; background: #f2f6fa; color: var(--accent-strong); font-size: 1rem; font-weight: 700; letter-spacing: .01em; }
+.timeline-item--highlight .recognition-award { display: inline-flex; width: fit-content; margin: 0; padding: 8px 14px; border: 1px solid rgba(69,107,154,.24); border-radius: 999px; background: #f2f6fa; color: var(--accent-strong); font-size: 1rem; font-weight: 700; letter-spacing: .01em; }
+.timeline-item--highlight .recognition-note { margin: 10px 0 0; color: var(--muted); font-size: .86rem; }
 .sport-facts span { color: #485563; border-color: var(--line); background: #f8f9fb; }
 .contact-box { background: #f7f9fb; border-color: var(--line-strong); }
 .footer { border-top: 1px solid var(--line); color: var(--muted); }
 .footer a:hover { color: var(--text); }
+.footer-links { align-items: center; }
+.social-icon-link { display: inline-flex; width: 24px; height: 24px; align-items: center; justify-content: center; color: var(--accent); transition: color .16s ease, transform .16s ease; }
+.social-icon-link:hover { color: var(--accent-strong); transform: translateY(-1px); }
+.social-icon-link svg { display: block; width: 20px; height: 20px; }
+.social-icon-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 .map-intro h2 { font-size: clamp(2.35rem,5vw,4rem); line-height: 1.02; font-weight: 500; margin: 14px 0 0; }
 .map-layout { grid-template-columns: minmax(0,1fr); gap: 14px; }
 .map-shell { background: #edf1f4; border-color: var(--line-strong); box-shadow: var(--shadow); }
@@ -182,10 +192,27 @@ body::before { display: none; }
 .adventure-note p { color: var(--muted); margin: 0; }
 .adventure-note strong { color: var(--text); }
 .media-placeholder { display: grid; place-items: center; min-height: 115px; padding: 18px; margin-top: 20px; border: 1px dashed var(--line-strong); border-radius: 10px; background: #f8f9fb; color: var(--subtle); text-align: center; font-size: .78rem; }
-.research-grid, .experience-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.football-photo-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 22px; }
+.football-photo-gallery img { display: block; width: 100%; aspect-ratio: 4 / 5; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); object-fit: contain; object-position: center; }
+.taekwondo-photo-slider { margin-top: 22px; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); }
+.taekwondo-photo-slides { min-height: 280px; }
+.taekwondo-photo-slide { display: grid; min-height: 280px; grid-template-rows: minmax(0,1fr) auto; justify-items: center; margin: 0; }
+.taekwondo-photo-slide[hidden] { display: none; }
+.taekwondo-photo-slide img { display: block; width: 100%; height: 280px; object-fit: contain; object-position: center; }
+.taekwondo-photo-slide figcaption { padding: 8px 12px 12px; color: var(--muted); font-size: .78rem; text-align: center; }
+.taekwondo-photo-controls { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 8px 12px; border-top: 1px solid var(--line); background: #fff; color: var(--muted); font-size: .75rem; }
+.photo-slide-control { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; background: #fff; color: var(--accent-strong); font-size: 1.15rem; line-height: 1; cursor: pointer; }
+.photo-slide-control:disabled { opacity: .4; cursor: not-allowed; }
+.photo-slide-control:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.research-grid, .experience-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px;   .taekwondo-photo-slide, .taekwondo-photo-slides { min-height: 220px; }
+  .taekwondo-photo-slide img { height: 220px; }
+}
 .research-card, .experience-card { padding: 28px; border-radius: var(--radius); }
 .research-card h3, .experience-card h3 { margin: 18px 0 10px; font-size: 1.4rem; font-weight: 500; }
 .research-card p, .experience-card p { color: var(--muted); margin: 0 0 18px; font-size: .88rem; }
+.mun-photo { display: block; width: 100%; max-height: 360px; margin-top: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); object-fit: contain; object-position: center; }
+.kedarkantha-gallery { display: grid; grid-template-columns: minmax(0,1fr); margin-top: 20px; }
+.kedarkantha-gallery img { display: block; width: 100%; max-width: 240px; height: 240px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); object-fit: contain; object-position: center; }
 .adventure-photo { display: block; width: 100%; aspect-ratio: 16 / 10; margin-top: 20px; border-radius: 10px; object-fit: cover; }
 .map-marker { position: absolute; display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
 .map-marker[hidden] { display: none !important; }

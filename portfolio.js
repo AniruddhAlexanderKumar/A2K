@@ -40,6 +40,27 @@ document.querySelectorAll(".venture-action[aria-controls]").forEach(button => {
   });
 });
 
+document.querySelectorAll("[data-photo-slider]").forEach(slider => {
+  const slides = [...slider.querySelectorAll(".taekwondo-photo-slide")];
+  const previousButton = slider.querySelector("[data-photo-previous]");
+  const nextButton = slider.querySelector("[data-photo-next]");
+  const counter = slider.querySelector("[data-photo-count]");
+  let activeSlide = 0;
+
+  const showSlide = index => {
+    activeSlide = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach((slide, slideIndex) => {
+      slide.hidden = slideIndex !== activeSlide;
+    });
+    counter.textContent = `${activeSlide + 1} / ${slides.length}`;
+    previousButton.disabled = activeSlide === 0;
+    nextButton.disabled = activeSlide === slides.length - 1;
+  };
+
+  previousButton.addEventListener("click", () => showSlide(activeSlide - 1));
+  nextButton.addEventListener("click", () => showSlide(activeSlide + 1));
+});
+
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && navLinks.classList.contains("open")) {
     navLinks.classList.remove("open");
