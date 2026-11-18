@@ -1,6 +1,8 @@
 const reader = document.getElementById("researchPdfReader");
 
 if (reader) {
+  const originalPdf = document.getElementById("original-pdf");
+  const toolbar = reader.querySelector(".research-pdf-toolbar");
   const pagesElement = reader.querySelector("[data-pdf-pages]");
   const statusElement = reader.querySelector("[data-pdf-status]");
   const pageInput = reader.querySelector("[data-pdf-page]");
@@ -25,7 +27,6 @@ if (reader) {
   let pageRecords = [];
   let currentPage = 1;
   let zoom = 1;
-  let renderStarted = false;
   let scrollFrame = 0;
   let searchTimer = 0;
   let searchRequest = 0;
@@ -55,29 +56,24 @@ if (reader) {
     reader.querySelector("[data-pdf-zoom-in]").disabled = zoom >= 2.5;
   }
 
+  function readingEdge() {
+    return pagesElement.getBoundingClientRect().top + parseFloat(getComputedStyle(pagesElement).paddingTop);
+  }
+
   function updateProgress() {
     if (!pageRecords.length) return;
 
-    const readerBounds = reader.getBoundingClientRect();
-    const toolbarBottom = reader.querySelector(".research-pdf-toolbar").getBoundingClientRect().bottom;
-    let progress = 0;
-
-    if (readerBounds.bottom <= 0) {
-      progress = 100;
-    } else if (readerBounds.top < window.innerHeight) {
-      let activeIndex = 0;
-      const anchor = Math.max(toolbarBottom + 12, 0);
-
-      for (let index = 0; index < pageRecords.length; index++) {
-        if (pageRecords[index].element.getBoundingClientRect().top <= anchor) activeIndex = index;
-        else break;
-      }
-
-      const activeBounds = pageRecords[activeIndex].element.getBoundingClientRect();
-      const fraction = Math.max(0, Math.min(1, (anchor - activeBounds.top) / activeBounds.height));
-      progress = ((activeIndex + fraction) / pageRecords.length) * 100;
-      currentPage = activeIndex + 1;
+    const anchor = readingEdge() + 1;
+    let activeIndex = 0;
+    for (let index = 1; index < pageRecords.length; index++) {
+      if (pageRecords[index].element.getBoundingClientRect().top > anchor) break;
+      activeIndex = index;
     }
+    const bounds = pageRecords[activeIndex].element.getBoundingClientRect();
+    const fraction = Math.max(0, Math.min(1, (anchor - bounds.top) / bounds.height));
+    const atEnd = pagesElement.scrollTop + pagesElement.clientHeight >= pagesElement.scrollHeight - 1;
+    currentPage = atEnd ? pageRecords.length : activeIndex + 1;
+    let progress = atEnd ? 100 : ((activeIndex + fraction) / pageRecords.length) * 100;
 
     progress = Math.round(progress * 10) / 10;
     progressElement.setAttribute("aria-valuenow", String(Math.round(progress)));
@@ -87,7 +83,6 @@ if (reader) {
   }
 
   function scheduleProgressUpdate() {
-    renderNearbyPages();
     if (scrollFrame) return;
     scrollFrame = window.requestAnimationFrame(() => {
       scrollFrame = 0;
@@ -98,20 +93,13 @@ if (reader) {
 
   function renderNearbyPages() {
     if (!pageRecords.length) return;
+    const viewport = pagesElement.getBoundingClientRect();
     for (const record of pageRecords) {
       const bounds = record.element.getBoundingClientRect();
-      const isNearViewport = bounds.bottom > -1200 && bounds.top < window.innerHeight + 1200;
+      const isNearViewport = bounds.bottom >= viewport.top - viewport.height && bounds.top <= viewport.bottom + viewport.height;
       if (isNearViewport) renderPage(record);
       else if (Math.abs(record.number - currentPage) > 2) releasePage(record);
     }
-  }
-
-  function pageWidth(record) {
-    const availableWidth = Math.max(180, pagesElement.clientWidth - 38);
-    const fitWidth = Math.min(920, availableWidth);
-    const width = fitWidth * zoom;
-    record.element.style.width = `${width}px`;
-    record.element.style.aspectRatio = `${record.width} / ${record.height}`;
   }
 
   function createPlaceholder(pageNumber) {
@@ -135,7 +123,7 @@ if (reader) {
 
   function drawSearchHighlights(match, record) {
     record.element.querySelectorAll(".pdf-search-highlight").forEach(highlight => highlight.remove());
-    const cssWidth = Math.max(120, record.element.clientWidth - 2);
+    const cssWidth = record.element.clientWidth;
     const viewport = record.page.getViewport({ scale: cssWidth / record.width });
     for (const segment of match.segments) {
       const transform = pdfjs.Util.transform(viewport.transform, segment.item.transform);
@@ -158,7 +146,6 @@ if (reader) {
     if (force) record.renderTask?.cancel();
     const generation = ++record.generation;
     record.element.dataset.renderState = "preparing";
-    pageWidth(record);
     const canvas = document.createElement("canvas");
     canvas.setAttribute("aria-label", `Page ${record.number} of ${pageRecords.length}`);
     record.element.classList.remove("is-error");
@@ -167,15 +154,13 @@ if (reader) {
     const renderPromise = (async () => {
       try {
         const page = record.page || await pdfDocument.getPage(record.number);
-        const cssWidth = Math.max(120, record.element.clientWidth - 2);
+        const cssWidth = record.element.clientWidth;
         const viewport = page.getViewport({ scale: cssWidth / record.width });
         const outputScale = Math.min(window.devicePixelRatio || 1, 2);
         const context = canvas.getContext("2d", { alpha: false });
 
         canvas.width = Math.ceil(viewport.width * outputScale);
         canvas.height = Math.ceil(viewport.height * outputScale);
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
 
         const task = page.render({
           canvasContext: context,
@@ -198,7 +183,7 @@ if (reader) {
         record.element.classList.add("is-error");
         record.element.dataset.renderState = "failed";
         record.placeholder.textContent = `Page ${record.number} could not be rendered.`;
-        setStatus(`Page ${record.number} could not be rendered. Try reloading the paper.`, true);
+        showPdfFallback(`Page ${record.number} could not be rendered.`);
       } finally {
         if (generation === record.generation) record.renderTask = null;
       }
@@ -209,35 +194,27 @@ if (reader) {
     if (record.renderPromise === renderPromise) record.renderPromise = null;
   }
 
-  function scrollToPage(pageNumber) {
+  function scrollToPage(pageNumber, behavior = reduceMotion ? "auto" : "smooth") {
     if (!pageRecords.length) return;
-    const number = Math.max(1, Math.min(pageRecords.length, Number(pageNumber) || 1));
-    const record = pageRecords[number - 1];
-    const toolbarHeight = reader.querySelector(".research-pdf-toolbar").getBoundingClientRect().height;
-    const pageBounds = record.element.getBoundingClientRect();
-    const behavior = reduceMotion ? "auto" : "smooth";
-
-    if (document.fullscreenElement === reader) {
-      reader.scrollTo({
-        top: reader.scrollTop + pageBounds.top - toolbarHeight - 12,
-        behavior
-      });
-    } else {
-      window.scrollTo({
-        top: window.scrollY + pageBounds.top - toolbarHeight - 12,
-        behavior
-      });
-    }
-
+    const number = Math.max(1, Math.min(pageRecords.length, Math.trunc(Number(pageNumber)) || 1));
+    const pageTop = pageRecords[number - 1].element.getBoundingClientRect().top;
+    pagesElement.scrollTo({ top: pagesElement.scrollTop + pageTop - readingEdge(), behavior });
     currentPage = number;
     updateControls();
   }
 
   function updateRenderedPages() {
     for (const record of pageRecords) {
-      pageWidth(record);
       if (record.rendered || record.renderTask) renderPage(record, true);
     }
+    scheduleProgressUpdate();
+  }
+
+  function setZoom(value) {
+    zoom = value;
+    reader.style.setProperty("--pdf-zoom", zoom);
+    scrollToPage(currentPage, "auto");
+    updateRenderedPages();
   }
 
   async function findMatches() {
@@ -253,6 +230,7 @@ if (reader) {
     }
 
     setSearchStatus("Searching…");
+    const matches = [];
 
     try {
       for (const record of pageRecords) {
@@ -276,7 +254,7 @@ if (reader) {
         while (offset !== -1) {
           const end = offset + query.length;
           const segments = record.textSegments.filter(segment => segment.end > offset && segment.start < end);
-          searchMatches.push({ page: record.number, offset, segments });
+          matches.push({ page: record.number, offset, segments });
           offset = record.text.indexOf(query, offset + query.length);
         }
 
@@ -287,6 +265,7 @@ if (reader) {
       }
 
       if (request !== searchRequest) return;
+      searchMatches = matches;
       if (!searchMatches.length) {
         setSearchStatus("No matches");
         return;
@@ -308,14 +287,13 @@ if (reader) {
 
   async function showMatch() {
     if (!searchMatches.length) return;
-    const matchIndex = activeMatch;
-    const match = searchMatches[matchIndex];
+    const match = searchMatches[activeMatch];
     const record = pageRecords[match.page - 1];
     clearSearchHighlights();
     scrollToPage(match.page);
     setSearchStatus(`Match ${activeMatch + 1} of ${searchMatches.length} · page ${match.page}`);
     await renderPage(record);
-    if (activeMatch !== matchIndex || !record.rendered) return;
+    if (searchMatches[activeMatch] !== match || !record.rendered) return;
     drawSearchHighlights(match, record);
   }
 
@@ -326,21 +304,22 @@ if (reader) {
   }
 
   async function initializeReader() {
-    if (renderStarted) return;
-    renderStarted = true;
+    reader.hidden = false;
     setStatus("Loading the research paper…");
 
     try {
       pdfjs = await import("./assets/vendor/pdfjs/pdf.mjs");
-      pdfjs.GlobalWorkerOptions.workerSrc = new URL("assets/vendor/pdfjs/pdf.worker.mjs", document.baseURI).href;
+      // Resolve library resources beside this module, not relative to the nested article URL.
+      const vendorBase = new URL("./assets/vendor/pdfjs/", import.meta.url);
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdf.worker.mjs", vendorBase).href;
 
       const loadingTask = pdfjs.getDocument({
-        url: new URL("assets/research/aerospace-supply-chain-disruption.pdf", document.baseURI).href,
-        cMapUrl: new URL("assets/vendor/pdfjs/cmaps/", document.baseURI).href,
+        url: originalPdf.href,
+        cMapUrl: new URL("cmaps/", vendorBase).href,
         cMapPacked: true,
-        standardFontDataUrl: new URL("assets/vendor/pdfjs/standard_fonts/", document.baseURI).href,
-        wasmUrl: new URL("assets/vendor/pdfjs/wasm/", document.baseURI).href,
-        iccUrl: new URL("assets/vendor/pdfjs/iccs/", document.baseURI).href,
+        standardFontDataUrl: new URL("standard_fonts/", vendorBase).href,
+        wasmUrl: new URL("wasm/", vendorBase).href,
+        iccUrl: new URL("iccs/", vendorBase).href,
         isEvalSupported: false
       });
 
@@ -355,16 +334,16 @@ if (reader) {
       }));
 
       const fragment = document.createDocumentFragment();
-      pageRecords = dimensions.map(({ number, width, height }) => {
+      pageRecords = dimensions.map(({ number, width, height, page }) => {
         const element = document.createElement("div");
         element.className = "research-pdf-page";
         element.dataset.pageNumber = String(number);
+        element.style.aspectRatio = `${width} / ${height}`;
         const placeholder = createPlaceholder(number);
         const record = {
           number,
           width,
-          height,
-          page: dimensions[number - 1].page,
+          page,
           element,
           placeholder,
           generation: 0,
@@ -374,27 +353,27 @@ if (reader) {
           text: "",
           textSegments: []
         };
-        pageWidth(record);
         element.append(placeholder);
         fragment.append(element);
         return record;
       });
 
+      toolbar.hidden = false;
       pagesElement.replaceChildren(fragment);
-      updateControls();
-      setStatus(`The ${pageCount}-page paper is ready. Pages render as you scroll.`);
+      setStatus("");
       updateProgress();
       renderNearbyPages();
     } catch (error) {
       console.error("Could not load the research paper.", error);
-      setStatus("The research paper could not be loaded. Please try again later.", true);
-      const openLink = document.createElement("a");
-      openLink.href = new URL("assets/research/aerospace-supply-chain-disruption.pdf", document.baseURI).href;
-      openLink.textContent = "Open the original PDF";
-      openLink.target = "_blank";
-      openLink.rel = "noopener noreferrer";
-      statusElement.append(" ", openLink);
+      showPdfFallback("The reader could not load the paper.");
     }
+  }
+
+  function showPdfFallback(message) {
+    setStatus(message, true);
+    const link = originalPdf.cloneNode(true);
+    link.removeAttribute("id");
+    statusElement.append(" ", link);
   }
 
   previousPageButton.addEventListener("click", () => scrollToPage(currentPage - 1));
@@ -407,20 +386,12 @@ if (reader) {
     }
   });
   reader.querySelector("[data-pdf-zoom-in]").addEventListener("click", () => {
-    zoom = Math.min(2.5, Math.round((zoom + 0.15) * 100) / 100);
-    updateControls();
-    updateRenderedPages();
+    setZoom(Math.min(2.5, Math.round((zoom + 0.15) * 100) / 100));
   });
   reader.querySelector("[data-pdf-zoom-out]").addEventListener("click", () => {
-    zoom = Math.max(0.6, Math.round((zoom - 0.15) * 100) / 100);
-    updateControls();
-    updateRenderedPages();
+    setZoom(Math.max(0.6, Math.round((zoom - 0.15) * 100) / 100));
   });
-  reader.querySelector("[data-pdf-fit]").addEventListener("click", () => {
-    zoom = 1;
-    updateControls();
-    updateRenderedPages();
-  });
+  reader.querySelector("[data-pdf-fit]").addEventListener("click", () => setZoom(1));
   searchForm.addEventListener("submit", event => {
     event.preventDefault();
     window.clearTimeout(searchTimer);
@@ -432,6 +403,7 @@ if (reader) {
   });
   searchPreviousButton.addEventListener("click", () => moveMatch(-1));
   searchNextButton.addEventListener("click", () => moveMatch(1));
+  fullscreenButton.hidden = !document.fullscreenEnabled;
   fullscreenButton.addEventListener("click", async () => {
     try {
       if (document.fullscreenElement === reader) await document.exitFullscreen();
@@ -446,28 +418,13 @@ if (reader) {
     const isFullscreen = document.fullscreenElement === reader;
     fullscreenButton.setAttribute("aria-label", isFullscreen ? "Exit fullscreen" : "Enter fullscreen");
     fullscreenButton.title = isFullscreen ? "Exit fullscreen" : "Enter fullscreen";
-    window.setTimeout(() => {
-      updateRenderedPages();
-      scheduleProgressUpdate();
-    }, 50);
   });
 
-  window.addEventListener("scroll", scheduleProgressUpdate, { passive: true });
-  reader.addEventListener("scroll", scheduleProgressUpdate, { passive: true });
-  window.addEventListener("resize", () => {
-    updateRenderedPages();
-    scheduleProgressUpdate();
-  }, { passive: true });
-
-  function initializeWhenNearReader() {
-    if (renderStarted) return;
-    const bounds = reader.getBoundingClientRect();
-    if (bounds.top < window.innerHeight + 600 && bounds.bottom > -600) {
-      window.removeEventListener("scroll", initializeWhenNearReader);
-      initializeReader();
-    }
+  pagesElement.addEventListener("scroll", scheduleProgressUpdate, { passive: true });
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(updateRenderedPages).observe(pagesElement);
+  } else {
+    window.addEventListener("resize", updateRenderedPages, { passive: true });
   }
-
-  window.addEventListener("scroll", initializeWhenNearReader, { passive: true });
-  window.setTimeout(initializeWhenNearReader, 300);
+  initializeReader();
 }
