@@ -109,8 +109,10 @@
     .hero-meta span::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 
     .hero-sidebar { display: grid; gap: clamp(12px, 2vw, 24px); min-width: 0; }
-    .weekly-update { width: min(100%, 400px); min-height: clamp(6rem, 12vw, 9rem); margin-inline: auto; padding: 20px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+    .weekly-update { width: min(100%, 400px); margin-inline: auto; padding: 20px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
     .weekly-update h2 { margin: 0; font-size: clamp(1.25rem, 2vw, 1.55rem); line-height: 1.2; font-weight: 500; }
+    .weekly-update p { margin: 1em 0 0; color: var(--muted); }
+    .weekly-update img { width: 100%; height: auto; margin-top: 1rem; }
     .hero-visual { position: relative; min-height: 500px; display: grid; place-items: center; }
     .orbit { position: absolute; width: min(100%, 480px); aspect-ratio: 1; border: 1px solid rgba(143,184,255,.16); border-radius: 50%; transform: rotate(-18deg); }
     .orbit::before, .orbit::after { content: ""; position: absolute; border: 1px solid rgba(143,184,255,.1); border-radius: 50%; inset: 10%; }
@@ -341,6 +343,10 @@
           </div>
           <section class="weekly-update" aria-labelledby="weekly-update-title">
             <h2 id="weekly-update-title">This week in my life</h2>
+            <p>On the morning of 17 November 2026, I lost my grandfather, Dr. Anil Kumar Thakur. He had spent much of his life practising medicine in Jamshedpur, often treating people who could not afford healthcare, and believed strongly in the importance of education and opportunity. His life was defined not just by his profession, but by the people he helped and the values he passed on to his family.</p>
+            <p>His passing has been difficult to come to terms with, particularly as it has made me reflect on the kind of impact one can leave behind.</p>
+            <img src="assets/anil-kumar-thakur-foundation.png" width="512" height="512" loading="lazy" alt="Late Dr. Anil Kumar Thakur Foundation artwork with his portrait and the motto: In Memory. In Service. For Generations." />
+            <p>In his memory, our family has established the Late Dr. Anil Kumar Thakur Foundation, beginning with an initiative to fund the education of a financially disadvantaged student in Jamshedpur. It is a small first step towards carrying forward something he believed in throughout his life: that a person's circumstances should not determine their opportunities. His influence on my family, and the values he stood for, will remain an important part of my life.</p>
           </section>
         </div>
       </div>
