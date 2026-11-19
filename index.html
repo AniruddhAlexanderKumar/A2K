@@ -108,6 +108,9 @@
     .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
     .hero-meta span::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 
+    .hero-sidebar { display: grid; gap: clamp(12px, 2vw, 24px); min-width: 0; }
+    .weekly-update { width: min(100%, 400px); min-height: clamp(6rem, 12vw, 9rem); margin-inline: auto; padding: 20px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+    .weekly-update h2 { margin: 0; font-size: clamp(1.25rem, 2vw, 1.55rem); line-height: 1.2; font-weight: 500; }
     .hero-visual { position: relative; min-height: 500px; display: grid; place-items: center; }
     .orbit { position: absolute; width: min(100%, 480px); aspect-ratio: 1; border: 1px solid rgba(143,184,255,.16); border-radius: 50%; transform: rotate(-18deg); }
     .orbit::before, .orbit::after { content: ""; position: absolute; border: 1px solid rgba(143,184,255,.1); border-radius: 50%; inset: 10%; }
@@ -301,7 +304,7 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="hero-kicker"><span class="status-dot"></span> Student · Builder · Aspiring aerospace engineer</div>
+          <div class="hero-kicker"><span class="status-dot"></span> Aerospace &amp; Deeptech Enthusiast</div>
           <h1>Aniruddh Alexander <span>Kumar.</span></h1>
           <section class="hero-intro" id="about" aria-labelledby="about-title">
             <h2 class="eyebrow" id="about-title">01 / About me</h2>
@@ -329,11 +332,16 @@
             </div>
           </div>
         </div>
-        <div class="hero-visual reveal" aria-label="Portrait placeholder">
-          <div class="orbit"><span class="orbit-node"></span></div>
-          <div class="portrait-frame">
-            <img class="portrait-photo" src="assets/portrait-hero.png" alt="Aniruddh Alexander Kumar" fetchpriority="high" />
+        <div class="hero-sidebar">
+          <div class="hero-visual reveal">
+            <div class="orbit"><span class="orbit-node"></span></div>
+            <div class="portrait-frame">
+              <img class="portrait-photo" src="assets/portrait-hero.png" alt="Aniruddh Alexander Kumar" fetchpriority="high" />
+            </div>
           </div>
+          <section class="weekly-update" aria-labelledby="weekly-update-title">
+            <h2 id="weekly-update-title">This week in my life</h2>
+          </section>
         </div>
       </div>
     </section>
