@@ -63,7 +63,8 @@ body::before { display: none; }
 .card-index { color: var(--subtle); }
 .card-symbol { border-color: var(--line-strong); color: var(--accent); }
 .venture-logo { display: block; width: 82px; height: 48px; object-fit: contain; object-position: center; padding: 3px 5px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
-.venture-logo--san-jose { width: 64px; height: 64px; padding: 0; border-radius: 10px; background: #000; }
+.venture-logo--foundation, .venture-logo--san-jose { width: 64px; height: 64px; padding: 0; border-radius: 10px; }
+.venture-logo--san-jose { background: #000; }
 .venture-action { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: #fff; color: var(--accent-strong); font: 700 .74rem "DM Sans",sans-serif; white-space: nowrap; cursor: pointer; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
 .venture-action:hover { transform: translateY(-1px); border-color: var(--accent); background: #f2f6fa; }
 .venture-action:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
