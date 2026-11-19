@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
-  <meta name="description" content="Aniruddh Alexander Kumar — student, entrepreneur and aspiring aerospace engineer working across engineering, technology and product development." />
+  <meta name="description" content="Aniruddh Alexander Kumar’s portfolio of aerospace systems research, spacecraft propulsion interests, software ventures, entrepreneurship and sport." />
   <meta property="og:title" content="Aniruddh Alexander Kumar | Portfolio" />
   <meta property="og:description" content="A portfolio of ventures, engineering projects, research, sport and experiences." />
   <title>Aniruddh Alexander Kumar — Portfolio</title>
@@ -89,13 +89,14 @@
 
     /* Hero */
     .hero { min-height: min(790px, calc(100svh - 74px)); display: flex; align-items: center; position: relative; padding: 74px 0 92px; }
-    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr); align-items: center; gap: clamp(48px, 8vw, 110px); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); align-items: start; gap: clamp(48px, 8vw, 110px); }
     .hero-copy { max-width: 690px; }
     .hero-kicker { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-size: .78rem; margin-bottom: 26px; }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #8ac7a0; box-shadow: 0 0 0 5px rgba(138,199,160,.1); }
     .hero h1 { font-size: clamp(3.7rem, 8.2vw, 7.1rem); line-height: .91; font-weight: 500; margin: 0; max-width: 760px; }
     .hero h1 span { display: block; color: var(--accent); }
-    .hero-intro { color: #b4bfce; font-size: clamp(1rem, 1.4vw, 1.12rem); max-width: 580px; margin: 30px 0 30px; line-height: 1.8; }
+    .hero-intro { display: grid; gap: 1em; color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.12rem); margin: 30px 0; line-height: 1.7; }
+    .hero-intro > * { margin: 0; }
     .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
     .button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 46px; padding: 0 19px; border-radius: 999px; font-size: .82rem; font-weight: 700; transition: transform .2s ease, background .2s ease, border-color .2s ease; }
     .button:hover { transform: translateY(-2px); }
@@ -117,10 +118,7 @@
     .portrait-initials { font: 500 clamp(5rem, 10vw, 8rem)/1 "Space Grotesk", sans-serif; color: rgba(219,232,252,.72); letter-spacing: -.12em; transform: translateX(-.05em); }
     .portrait-photo { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: none; }
     .portrait-note { position: absolute; z-index: 3; bottom: 28px; left: 50%; transform: translateX(-50%); color: rgba(230,239,251,.56); font-size: .61rem; text-transform: uppercase; letter-spacing: .16em; white-space: nowrap; }
-    /* Profile / stats */
-    .intro-grid { display: grid; grid-template-columns: minmax(0,1fr); }
-    .intro-copy h3 { font: 500 clamp(1.8rem, 3.2vw, 2.8rem)/1.2 "Space Grotesk", sans-serif; margin: 0 0 22px; max-width: 760px; }
-    .intro-copy p { color: var(--muted); max-width: 760px; margin: 0 0 15px; }
+    /* Stats */
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 66px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: rgba(17,24,35,.48); }
     .stat { padding: 27px 28px; border-right: 1px solid var(--line); }
     .stat:last-child { border-right: 0; }
@@ -228,7 +226,6 @@
       .nav-links { gap: 13px; }
       .nav-links a { font-size: .72rem; }
       .hero-grid { gap: 40px; }
-      .intro-grid { gap: 45px; }
       .map-layout { grid-template-columns: minmax(0,1fr) 235px; }
     }
     @media (max-width: 760px) {
@@ -248,10 +245,6 @@
       .section { padding: 82px 0; }
       .section-head, .map-intro { display: block; }
       .section-head p, .map-intro p { margin-top: 18px; }
-      .intro-grid { grid-template-columns: 1fr; gap: 22px; }
-      .intro-aside { display: flex; align-items: center; gap: 20px; }
-      .intro-aside .aside-number { font-size: 4.5rem; }
-      .intro-aside p { margin: 0; max-width: none; }
       .stats-grid { grid-template-columns: repeat(2,1fr); margin-top: 42px; }
       .stat:nth-child(2) { border-right: 0; }
       .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
@@ -307,10 +300,15 @@
   <main>
     <section class="hero" id="home">
       <div class="container hero-grid">
-        <div class="hero-copy reveal">
+        <div class="hero-copy">
           <div class="hero-kicker"><span class="status-dot"></span> Student · Builder · Aspiring aerospace engineer</div>
           <h1>Aniruddh Alexander <span>Kumar.</span></h1>
-          <p class="hero-intro">I’m a student, entrepreneur and aspiring aerospace engineer interested in building technology, developing engineering systems and exploring the future of aerospace.</p>
+          <section class="hero-intro" id="about" aria-labelledby="about-title">
+            <h2 class="eyebrow" id="about-title">01 / About me</h2>
+            <p>I'm Aniruddh Alexander Kumar. My interests lie primarily in aerospace engineering, particularly spacecraft propulsion, but my work and experiences extend across software development, independent aerospace systems research, entrepreneurship and sport. Over the years, I've worked on engineering research, developed software ventures, competed in mathematics competitions and pursued Taekwondo, earning a Dan 1 black belt from the Korean Taekwondo Association of China. My academic journey has also taken me across several countries and four different curricula, exposing me to different educational systems and ways of approaching problems.</p>
+            <p>Currently, I am involved in two software ventures, Solution Velocity and Consecuencia, each approaching engineering and product development from a different perspective. Solution Velocity focuses on Product Development Lifecycle Management, bringing engineering teams, processes and product development workflows together. Consecuencia explores the use of AI to trace engineering changes, identify contradictions and understand their downstream consequences. Alongside these ventures, I am conducting independent research in aerospace systems, including non-nuclear pulsed plasma propulsion, as well as research into the effects of supply-chain disruptions on the aerospace industry. Much of my current work revolves around understanding how complex engineering systems are designed, developed and improved.</p>
+            <p>Looking further ahead, I intend to pursue aerospace engineering, with a particular focus on spacecraft propulsion, propulsion architecture and advanced space systems. I am especially interested in the engineering challenges involved in making space transportation more capable and enabling longer-term operations beyond Earth. Eventually, I hope to establish an aerospace technology company, working on the development of propulsion systems, spacecraft technologies and supporting space infrastructure.</p>
+          </section>
           <div class="hero-actions">
             <a class="button button-primary" href="#projects">Explore my work <span aria-hidden="true">↘</span></a>
             <a class="button button-secondary" href="#journey">My journey <span aria-hidden="true">↗</span></a>
@@ -335,22 +333,6 @@
           <div class="orbit"><span class="orbit-node"></span></div>
           <div class="portrait-frame">
             <img class="portrait-photo" src="assets/portrait-hero.png" alt="Aniruddh Alexander Kumar" fetchpriority="high" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="about">
-      <div class="container">
-        <div class="section-head reveal">
-          <div><span class="eyebrow">01 / Profile</span><h2>About me</h2></div>
-        </div>
-        <div class="intro-grid reveal">
-          <div class="intro-copy">
-            <h3>Growing up across different places has shaped how I approach unfamiliar problems.</h3>
-            <p>Born in Bridgend, Wales, I have lived across multiple countries and experienced four different academic systems. Having moved between cultures, schools and environments, adapting to unfamiliar surroundings has become a regular part of my life.</p>
-            <p>My interests sit at the intersection of aerospace, engineering, software and entrepreneurship. I enjoy taking an idea, understanding the problem behind it and working with teams to develop useful projects. Frequently changing schools and educational systems has challenged me to adapt while continuing to explore how complex engineering systems work.</p>
-            <p>Outside technology, football and taekwondo have been important parts of my development. They have given me a different environment in which to learn discipline, teamwork and decision-making.</p>
           </div>
         </div>
       </div>
@@ -489,8 +471,12 @@
             <span class="sport-icon">01 / FOOTBALL</span>
             <h3>Football</h3>
             <p>I play primarily as an attacking midfielder, with experience in forward and wide roles. I have been part of the Real Madrid Foundation West India Select Squad U15 Team, South United U17 Select Squad, and Shanghai Lions FC U9 and U12 Select Squads.</p>
-            <p>Indus International School Pune Varsity</p>
-            <p>Elpro International School PCMC Varsity</p>
+            <p>Shanghai Shenhua FC u7,u9,u12 Youth 'A' Team</p>
+            <p>Real Madrid Foundation West India Select Squad u15 'A' Team</p>
+            <p>South United Football Club (Pune) Select Squad u17 'A' Team</p>
+            <p>Rising Pune FC u17</p>
+            <p>Elpro International School PCMC Varsity u15</p>
+            <p>Indus International School Pune Varsity u15 &amp; u17</p>
             <div class="sport-facts"><span>Primary: CAM · RM · RWB</span><span>Also: ST · RW</span><span>Preferred foot: Right</span></div>
             <a class="text-link" href="football.html">Explore Highlights ↗</a>
             <div class="football-photo-gallery" aria-label="Football match photographs">
