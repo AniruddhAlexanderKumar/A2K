@@ -1,0 +1,32 @@
+{
+  "name": "@sv/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "seed": "tsx src/db/seed.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.17",
+    "@sv/shared": "*",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jose": "^6.2.18",
+    "kysely": "^0.29.9",
+    "multer": "^2.0.2",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
