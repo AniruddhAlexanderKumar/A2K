@@ -6,6 +6,22 @@ The interactive “Places That Shaped Me” map uses MapLibre GL JS and OpenFree
 
 The supplied portrait is used in the homepage hero, and the supplied kayaking photo accompanies the Adventures transition. Football and taekwondo highlight videos are stored under `assets/football/` and `assets/taekwondo/`. The Projects & research card links to the standalone paper at `/research/aerospace-supply-chain/`. Its self-hosted PDF.js reader, direct-open link and download all use the same original PDF in `assets/research/`. The links also work without JavaScript.
 
+## Solution Velocity
+
+The same repository also contains **Solution Velocity**, an AI-powered Product Development
+Lifecycle Management platform built around a Journey-first architecture. It lives in
+[`solution-velocity/`](solution-velocity/README.md) and is independent of this portfolio site.
+
+```bash
+cd solution-velocity
+npm install
+npm run dev
+```
+
+See [`solution-velocity/README.md`](solution-velocity/README.md) for the architecture, and
+[`solution-velocity/docs/REDESIGN.md`](solution-velocity/docs/REDESIGN.md) for the design
+decisions behind the three-destination structure.
+
 ## Preview locally
 
 From the project root:
